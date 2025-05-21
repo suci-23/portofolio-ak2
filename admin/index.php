@@ -1,3 +1,27 @@
+<?php
+session_start();
+include 'config/koneksi.php';
+
+if (isset($_POST['email']) && isset($_POST['password'])) {
+  $email = $_POST['email'];
+  $password = sha1($_POST['password']);
+
+  //select (tampilkan semua data dari table user, dmna email dan password diambil dr org)
+  //input di inputan email
+  $query = mysqli_query($config, "SELECT * FROM users WHERE email='$email' AND password = '$password'");
+
+  //cek kesamaan email, sesuai atau tdk dgn yg diinput di tabel users
+  if (mysqli_num_rows($query) > 0) {
+    $data = mysqli_fetch_assoc($query);
+    $_SESSION['NAME'] = $data['name'];
+    $_SESSION['ID_USER'] = $data['id'];
+    header("location:dashboard.php");
+  } else {
+    header("location:index.php?error=login");
+  }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
