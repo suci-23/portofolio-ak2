@@ -12,10 +12,12 @@ if (isset($_POST['email']) && isset($_POST['password'])) {
 
   //cek kesamaan email, sesuai atau tdk dgn yg diinput di tabel users
   if (mysqli_num_rows($query) > 0) {
-    $data = mysqli_fetch_assoc($query);
-    $_SESSION['NAME'] = $data['name'];
-    $_SESSION['ID_USER'] = $data['id'];
-    header("location:dashboard.php");
+    $row = mysqli_fetch_assoc($query);
+    $_SESSION['NAME'] = $row['name'];
+    $_SESSION['ID_USER'] = $row['id'];
+    $_SESSION['LEVEL'] = $row['id_level'];
+
+    header("location:dashboard.php?level=" . base64_encode($_SESSION['LEVEL'])); //arahkan ke dashboard.php
   } else {
     header("location:index.php?error=login");
   }

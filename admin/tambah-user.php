@@ -105,7 +105,7 @@ if (isset($_POST['edit'])) {
                     </div>
                     <div class="col-sm-10">
                       <input required type="text" name="name" class="form-control" placeholder="Your Name"
-                        value="<?= $rowedit['name'] ?>">
+                        value="<?= isset($rowedit['name']) ? $rowedit['name'] : ''; ?>">
                     </div>
                   </div>
                   <div class="mb-3 row">
@@ -114,7 +114,7 @@ if (isset($_POST['edit'])) {
                     </div>
                     <div class="col-sm-10">
                       <input required type="email" name="email" class="form-control" placeholder="Your Email"
-                        value="<?= $rowedit['email'] ?>">
+                        value="<?= isset($rowedit['email']) ? $rowedit['email'] : ''; ?>">
                     </div>
                   </div>
                   <div class="mb-3 row">
