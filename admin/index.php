@@ -17,11 +17,12 @@ if (isset($_POST['email']) && isset($_POST['password'])) {
     $_SESSION['ID_USER'] = $row['id'];
     $_SESSION['LEVEL'] = $row['id_level'];
 
-    header("location:dashboard.php?level=" . base64_encode($_SESSION['LEVEL'])); //arahkan ke dashboard.php
+    header("location:dashboard.php"); //arahkan ke dashboard.php
   } else {
     header("location:index.php?error=login");
   }
 }
+
 ?>
 
 <!DOCTYPE html>

@@ -1,12 +1,4 @@
-<?php
-session_start();
-
-$_name = isset($_SESSION['NAME']) ? $_SESSION['NAME'] : '';
-
-if (!$_name) {
-  header('Location: index.php?access=failed');
-}
-?>
+<?php ?>
 
 <header class="shadow">
   <nav class="navbar navbar-expand-lg bg-body-white">
@@ -26,7 +18,7 @@ if (!$_name) {
               Page
             </a>
             <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="#">Action</a></li>
+              <li><a class="dropdown-item" href="#">About</a></li>
               <li><a class="dropdown-item" href="#">Another action</a></li>
               <li>
                 <hr class="dropdown-divider">
@@ -34,23 +26,27 @@ if (!$_name) {
               <li><a class="dropdown-item" href="#">Something else here</a></li>
             </ul>
           </li>
-          <?php
-          $decrypt = base64_decode($_GET['level']);
-          if (isset($_GET['level']) && $decrypt == 1) {
-          ?>
-            <li class="nav-item">
-              <a class="nav-link" href="user.php?level=<?php echo base64_encode($_SESSION['LEVEL']) ?>">User</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link"
-                href="dashboard.php?level=<?php echo base64_encode($_SESSION['LEVEL']) ?>&page=manage-profile">Profile</a>
-            </li>
-          <?php
-          } else {
-            # code...
-          }
-          ?>
-
+          <li class="nav-item">
+            <a class="nav-link" href="?page=user">User</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="?page=manage-profile">Profile</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="?page=manage-skills">Skills</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="?page=manage-experience">Experiences</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="?page=manage-contact">Contact</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="?page=manage-galleries">Galleries</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="?page=manage-about">About Us</a>
+          </li>
         </ul>
 
         <ul class="navbar-nav mr-auto mb-2 mb-lg-0">

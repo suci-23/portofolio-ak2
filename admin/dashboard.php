@@ -1,3 +1,16 @@
+<?php
+session_start();
+ob_start();
+
+$_name = isset($_SESSION['NAME']) ? $_SESSION['NAME'] : '';
+
+if (!$_name) {
+  header('Location: index.php?access=failed');
+}
+
+include 'config/koneksi.php';
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -17,16 +30,24 @@
     <?php include 'inc/header.php'; ?>
     <div class="content mt-5">
       <div class="container">
-        <div class="row">
-          <div class="col-12">
+        <div class="row-justify-content-center">
+
+          <div class="col-sm-12">
             <div class="card">
               <div class="card-header">
-                Dashboard
+                <?php echo isset($_GET['page']) ? str_replace('-', ' ', ucfirst($_GET['page'])) : 'HOME' ?>
               </div>
               <div class="card-body">
                 <?php
-                if (isset($_GET['page']) && file_exists('content/' . $_GET['page'] . '.php')) {
-                  include 'content/' . $_GET['page'] . '.php';
+                if (isset($_GET['page'])) {
+                  //jika file ada
+                  if (file_exists('content/' . $_GET['page'] . '.php')) {
+                    include('content/' . $_GET['page'] . '.php');
+                  } else {
+                    include 'content/notfound.php'; //jika file tidak ada
+                  }
+                } else {
+                  include 'content/home.php'; //jika file tidak ada ver.2
                 }
                 ?>
               </div>
