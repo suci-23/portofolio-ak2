@@ -1,12 +1,12 @@
 <?php
-session_start();
+// session_start();
 ob_start();
 
-$_name = isset($_SESSION['NAME']) ? $_SESSION['NAME'] : '';
+// $_name = isset($_SESSION['NAME']) ? $_SESSION['NAME'] : '';
 
-if (!$_name) {
-  header('Location: index.php?access=failed');
-}
+// if (!$_name) {
+//   header('Location: index.php?access=failed');
+// }
 
 include 'config/koneksi.php';
 ?>
@@ -23,9 +23,23 @@ include 'config/koneksi.php';
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO" crossorigin="anonymous">
   </script>
+
+  <!-- SUMMERNOTE -->
+  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+    integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous">
+  </script>
+  <link href="https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote-lite.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote-lite.min.js"></script>
+
+  <!-- DATA TABLES -->
+  <link rel="stylesheet" href="https://cdn.datatables.net/2.3.1/css/dataTables.dataTables.css" />
+  <script src="https://cdn.datatables.net/2.3.1/js/dataTables.js"></script>
+
 </head>
 
 <body>
+
+
   <div class="wrapper">
     <?php include 'inc/header.php'; ?>
     <div class="content mt-5">
@@ -57,6 +71,25 @@ include 'config/koneksi.php';
       </div>
     </div>
   </div>
+
+  <script>
+    $('#summernote').summernote({
+      placeholder: 'Hello stand alone ui',
+      tabsize: 2,
+      height: 120,
+      toolbar: [
+        ['style', ['style']],
+        ['font', ['bold', 'underline', 'clear']],
+        ['color', ['color']],
+        ['para', ['ul', 'ol', 'paragraph']],
+        ['table', ['table']],
+        ['insert', ['link', 'picture', 'video']],
+        ['view', ['fullscreen', 'codeview', 'help']]
+      ]
+    });
+
+    $('#table').DataTable();
+  </script>
 
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
     integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous">

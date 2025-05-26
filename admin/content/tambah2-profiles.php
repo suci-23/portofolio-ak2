@@ -10,24 +10,33 @@ if (isset($_POST['simpan'])) {
   $email = $_POST['email'];
   $phone = $_POST['phone'];
   $description = $_POST['description'];
-  $photo = $_FILES['photo']['name'];
   $status = $_POST['status'];
   $size = $_FILES['photo']['size'];
 
+
+  //PROSES SIMPAN FOTO
+  $photo = $_FILES['photo']['name'];
+  $tmp_name = $_FILES['photo']['tmp_name'];
+
   //ekstensi yg boleh diupload: .png, .jpg, .jpeg
   $ekstensi = array('png', 'jpg', 'jpeg');
+  $filename = uniqid() . '_' . basename($photo);
+  $filepath = 'uploads/' . $filename;
 
   //apakah user upload dgn ekstensi yg sesuai? YA, gambar masuk ke table dan folder. TIDAK, error: "Ekstensi tidak ada"
   //in_array = utk cek isi array ada nilai atau ga
 
   $ext = pathinfo($photo, PATHINFO_EXTENSION);
 
-  if (in_array($ext, $ekstensi)) {
+  if (!in_array($ext, $ekstensi)) {
     $error[] = "Ekstensi File Tidak Ada.";
   } else {
-    $query = mysqli_query($config, "INSERT INTO profiles (nm_profile, profession, email, phone, description, photo, status) VALUES ('$name', '$profession', '$email', '$phone', '$description', '$photo', '$status')");
+    move_uploaded_file($tmp_name, $filepath);
+    unlink("uploads/" . $rowprofile['photo']);
+
+    $query = mysqli_query($config, "INSERT INTO profiles (nm_profile, profession, email, phone, photo, description, status,tipe) VALUES ('$name', '$profession', '$email', '$phone', '$filename', '$description', '$status','pribadi')");
     if ($query) {
-      header('location:?page=user&tambah=berhasil');
+      header('location:?page=profile&tambah=berhasil');
     }
   }
 }
@@ -37,16 +46,38 @@ $id_user = isset($_GET['edit']) ? $_GET['edit'] : '';
 $queryedit = mysqli_query($config, "SELECT * FROM users WHERE id='$id_user'");
 $rowedit = mysqli_fetch_assoc($queryedit);
 
-if (isset($_POST['edit'])) {
-  $name = $_POST['name'];
-  $email = $_POST['email'];
-  $password = sha1($_POST['password']);
+//mencari, apakah di dlm tbl profiles ada datanya? YA, update. TIDAK, insert.
+//mysqli_num_row()
+// $queryprofile = mysqli_query($config, "SELECT * FROM profiles ORDER BY id DESC");
+// if (mysqli_num_rows($queryprofile) > 0) {
+//   $rowprofile = mysqli_fetch_assoc($queryprofile);
+//   $id = $rowprofile['id'];
 
-  $queryUpdate = mysqli_query($config, "UPDATE users SET name = '$name', email = '$email', password = '$password' WHERE id='$id_user'");
-  if ($queryUpdate) {
-    header('location:user.php?edit=berhasil');
-  }
-}
+//   //jika user upload gambar
+//   if (!empty($photo)) {
+//     $filename = uniqid() . '_' . basename($photo['name']);
+//     $filepath = 'uploads/' . $filename;
+//     move_uploaded_file($photo['tmp_name'], $filepath);
+
+//     $update = mysqli_query($config, "UPDATE profiles SET nm_profile='$nm_profile', profession='$profession', email='$email', phone='$phone', description='$description', photo = '$filename' WHERE id = '$id'");
+//     header("location:?page=profile&edit=berhasil");
+//   } else {
+//     //perintah update
+//     $update = mysqli_query($config, "UPDATE profiles SET nm_profile = '$nm_profile' WHERE id = '$id'");
+//     header("location:?page=profile&tambah=berhasil");
+//   }
+// } else {
+
+//   //perintah insert
+//   if (!empty($photo)) {
+//     //JIKA USER UPLOAD GAMBAR
+//   } else {
+
+//     //JIKA USSER TIDAK UPLOAD GAMBAR
+//     $inputQ = mysqli_query($config, "INSERT INTO profiles (nm_profile, profession, email, phone, description) VALUES ('$nm_profile','$profession', '$email', '$phone', '$description')");
+//     header("location:?page=manage-profile&ubah=berhasil");
+//   }
+// }
 
 ?>
 
@@ -94,21 +125,21 @@ if (isset($_POST['edit'])) {
 
   <div class="mb-3 row">
     <div class="col-sm-2">
-      <label for="">Details *</label>
-    </div>
-    <div class="col-sm-10">
-      <input required type="description" name="description" class="form-control" placeholder="Your description"
-        value="<?= isset($rowedit['description']) ? $rowedit['description'] : ''; ?>">
-    </div>
-  </div>
-
-
-  <div class="mb-3 row">
-    <div class="col-sm-2">
       <label for="">Photo</label>
     </div>
     <div class="col-sm-10">
       <input type="file" name="photo">
+    </div>
+  </div>
+
+  <div class="mb-3 row">
+    <div class="col-sm-2">
+      <label for="">Content *</label>
+    </div>
+    <div class="col-sm-10">
+      <textarea id="summernote" type="description" name="description" class="form-control"
+        placeholder="Your description" cols="30" rows="5"
+        value="<?= isset($rowedit['description']) ? $rowedit['description'] : ''; ?>"></textarea>
     </div>
   </div>
 
@@ -121,6 +152,16 @@ if (isset($_POST['edit'])) {
       <input type="radio" name="status" value="0"> Draft
     </div>
   </div>
+
+  <!-- <div class="mb-3 row">
+    <div class="col-sm-2">
+      <label for="">Tipe</label>
+    </div>
+    <div class="col-sm-10">
+      <input type="radio" name="status" value="pribadi" checked> Pribadi
+      <input type="radio" name="status" value="skill"> Skill
+    </div>
+  </div> -->
 
   <div class="mb-3 row">
     <div class="col-sm-12">

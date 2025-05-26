@@ -1,4 +1,7 @@
-<?php ?>
+<?php
+session_start();
+$_name = isset($_SESSION['NAME']) ? $_SESSION['NAME'] : '';
+?>
 
 <header class="shadow">
   <nav class="navbar navbar-expand-lg bg-body-white">
@@ -23,11 +26,11 @@
               <li>
                 <hr class="dropdown-divider">
               </li>
-              <li><a class="dropdown-item" href="#">Something else here</a></li>
+              <li><a class="dropdown-item" href="?page=contact">Contact</a></li>
             </ul>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="?page=user">User</a>
+            <a class="nav-link" href="?page=users">User</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="?page=manage-profile">Profile</a>
@@ -42,7 +45,7 @@
             <a class="nav-link" href="?page=manage-contact">Contact</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="?page=manage-galleries">Galleries</a>
+            <a class="nav-link" href="?page=services">Services</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="?page=manage-about">About Us</a>

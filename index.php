@@ -97,7 +97,7 @@ $rowprofile = mysqli_fetch_assoc($queryprofile);
 
       <div class="container d-flex flex-column align-items-center justify-content-center text-center" data-aos="fade-up"
         data-aos-delay="100">
-        <h2>I am Morgan Freeman</h2>
+        <h2><?php echo isset($rowprofile['nm_profile']) ? $rowprofile['nm_profile'] : '' ?></h2>
         <p><span class="typed" data-typed-items="Designer, Developer, Freelancer, Photographer"></span></p>
       </div>
 
@@ -113,13 +113,22 @@ $rowprofile = mysqli_fetch_assoc($queryprofile);
 
             <div class="row justify-content-between gy-4">
               <div class="col-lg-5">
-                <img src="assets/img/profile-img.jpg" class="img-fluid" alt="">
+                <img src="admin/uploads/<?php echo isset($rowprofile['photo']) ? $rowprofile['photo'] : '' ?>"
+                  class="img-fluid" alt="">
               </div>
               <div class="col-lg-7 about-info">
-                <p><strong>Name: </strong> <span>Morgan Freeman</span></p>
-                <p><strong>Profile: </strong> <span>full stack developer</span></p>
-                <p><strong>Email: </strong> <span>contact@example.com</span></p>
-                <p><strong>Phone: </strong> <span>(617) 557-0089</span></p>
+                <p><strong>Name: </strong>
+                  <span><?php echo isset($rowprofile['nm_profile']) ? $rowprofile['nm_profile'] : '' ?></span>
+                </p>
+                <p><strong>Profile: </strong>
+                  <span><?php echo isset($rowprofile['profession']) ? $rowprofile['profession'] : '' ?></span>
+                </p>
+                <p><strong>Email: </strong>
+                  <span><?php echo isset($rowprofile['email']) ? $rowprofile['email'] : '' ?></span>
+                </p>
+                <p><strong>Phone: </strong>
+                  <span><?php echo isset($rowprofile['phone']) ? $rowprofile['phone'] : '' ?></span>
+                </p>
               </div>
             </div>
 
@@ -164,22 +173,13 @@ $rowprofile = mysqli_fetch_assoc($queryprofile);
 
           <div class="col-md-6">
             <div class="about-me">
-              <h4><?php echo isset($rowprofile['nm_profile']) ? $rowprofile['nm_profile'] : '' ?></h4>
+              <h4><?php echo $rowprofile['nm_profile'] ?? '' ?></h4>
               <p>
-                Curabitur non nulla sit amet nisl tempus convallis quis ac lectus. Curabitur arcu erat, accumsan id
+                <?php echo isset($rowprofile['description']) ? $rowprofile['description'] : '' ?>
+                <!-- Curabitur non nulla sit amet nisl tempus convallis quis ac lectus. Curabitur arcu erat, accumsan id
                 imperdiet et, porttitor
                 at sem. Praesent sapien massa, convallis a pellentesque nec, egestas non nisi. Nulla
-                porttitor accumsan tincidunt.
-              </p>
-              <p>
-                Mauris blandit aliquet elit, eget tincidunt nibh pulvinar a. Vivamus suscipit tortor eget felis
-                porttitor volutpat. Vestibulum
-                ac diam sit amet quam vehicula elementum sed sit amet dui. porttitor at sem.
-              </p>
-              <p>
-                Nulla porttitor accumsan tincidunt. Quisque velit nisi, pretium ut lacinia in, elementum id enim.
-                Nulla porttitor accumsan
-                tincidunt. Mauris blandit aliquet elit, eget tincidunt nibh pulvinar a.
+                porttitor accumsan tincidunt. -->
               </p>
             </div>
           </div>
@@ -917,7 +917,21 @@ $rowprofile = mysqli_fetch_assoc($queryprofile);
           </div>
         </div>
 
-        <form action="forms/contact.php" method="post" class="php-email-form" data-aos="fade-up" data-aos-delay="300">
+        <?php
+        if (isset($_POST['sent'])) {
+          $name = $_POST['name'];
+          $email = $_POST['email'];
+          $subject = $_POST['subject'];
+          $message = $_POST['message'];
+
+          $query = mysqli_query($config, "INSERT INTO kontak (name, email, subject, message) VALUE ('$name', '$email', '$subject', '$message')");
+          // if ($query) {
+          //   header('location:?=index.php');
+          // }
+        }
+
+        ?>
+        <form action="" method="post" class="php-email-form" data-aos="fade-up" data-aos-delay="300">
           <div class="row gy-4">
 
             <div class="col-md-6">
@@ -941,7 +955,7 @@ $rowprofile = mysqli_fetch_assoc($queryprofile);
               <div class="error-message"></div>
               <div class="sent-message">Your message has been sent. Thank you!</div>
 
-              <button type="submit">Send Message</button>
+              <button type="submit" name="sent">Send Message</button>
             </div>
 
           </div>
