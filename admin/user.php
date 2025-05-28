@@ -1,6 +1,7 @@
 <?php
 include 'config/koneksi.php';
 
+
 //munculkan / pilih semua data dr table users, urutkan dari yg terbesar - kecil.
 
 $query = mysqli_query($config, 'SELECT * FROM users ORDER BY id DESC');
@@ -57,17 +58,17 @@ if (isset($_GET['delete'])) {
 
                     <tbody>
                       <?php foreach ($row as $key => $data): ?>
-                      <tr>
-                        <td><?= $key + 1 ?></td>
-                        <td><?= $data['name'] ?></td>
-                        <td><?= $data['email'] ?></td>
-                        <td>
-                          <a href="tambah-user.php?edit=<?php echo $data['id'] ?>"
-                            class="btn btn-success btn-sm">Edit</a>
-                          <a onclick="return confirm('Are You Sure?')" class="btn btn-warning btn-sm"
-                            href="user.php?delete=<?php echo $data['id'] ?>">Delete</a>
-                        </td>
-                      </tr>
+                        <tr>
+                          <td><?= $key + 1 ?></td>
+                          <td><?= $data['name'] ?></td>
+                          <td><?= $data['email'] ?></td>
+                          <td>
+                            <a href="tambah-user.php?edit=<?php echo $data['id'] ?>"
+                              class="btn btn-success btn-sm">Edit</a>
+                            <a onclick="return confirm('Are You Sure?')" class="btn btn-warning btn-sm"
+                              href="user.php?delete=<?php echo $data['id'] ?>">Delete</a>
+                          </td>
+                        </tr>
                       <?php endforeach ?>
                     </tbody>
                   </table>

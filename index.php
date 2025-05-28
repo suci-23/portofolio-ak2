@@ -1,8 +1,35 @@
 <?php
 include 'admin/config/koneksi.php';
+
+//TAMPILIN PROFILES
 $queryprofile = mysqli_query($config, "SELECT * FROM profiles ORDER BY id DESC");
 $rowprofile = mysqli_fetch_assoc($queryprofile);
 
+//TAMPILIN SERVICES
+$queryservice = mysqli_query($config, 'SELECT * FROM services ORDER BY id DESC');
+$rowservice = mysqli_fetch_all($queryservice, MYSQLI_ASSOC);
+
+// List icon sesuai urutan card (SERVICES)
+$icons = [
+  'bi-activity',
+  'bi-broadcast',
+  'bi-easel',
+  'bi-bounding-box-circles',
+  'bi-calendar-week',
+  'bi-chat-square-text'
+];
+
+//TAMPILIN SUMMARY
+$querysummary = mysqli_query($config, "SELECT * FROM summary LIMIT 1");
+$rowsummary = mysqli_fetch_assoc($querysummary);
+
+//TAMPILIN EDUCATIONS
+$queryeducation = mysqli_query($config, "SELECT * FROM educations ORDER BY id DESC");
+$roweducation = mysqli_fetch_all($queryeducation, MYSQLI_ASSOC);
+
+//TAMPILIN EXPERIENCES
+$queryexperience = mysqli_query($config, "SELECT * FROM experiences ORDER BY id ASC");
+$rowexperience = mysqli_fetch_all($queryexperience, MYSQLI_ASSOC);
 ?>
 
 <!DOCTYPE html>
@@ -11,7 +38,7 @@ $rowprofile = mysqli_fetch_assoc($queryprofile);
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <title>Index - DevFolio Bootstrap Template</title>
+  <title>Porto Suci</title>
   <meta name="description" content="">
   <meta name="keywords" content="">
 
@@ -61,8 +88,9 @@ $rowprofile = mysqli_fetch_assoc($queryprofile);
           <li><a href="#hero" class="active">Home<br></a></li>
           <li><a href="#about">About</a></li>
           <li><a href="#services">Services</a></li>
-          <li><a href="#portfolio">Portfolio</a></li>
-          <li class="dropdown"><a href="#"><span>Dropdown</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+          <!-- <li><a href="#portfolio">Portfolio</a></li> -->
+          <!-- DROPDOWN AREA -->
+          <!-- <li class="dropdown"><a href="#"><span>Dropdown</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
             <ul>
               <li><a href="#">Dropdown 1</a></li>
               <li class="dropdown"><a href="#"><span>Deep Dropdown</span> <i
@@ -79,7 +107,7 @@ $rowprofile = mysqli_fetch_assoc($queryprofile);
               <li><a href="#">Dropdown 3</a></li>
               <li><a href="#">Dropdown 4</a></li>
             </ul>
-          </li>
+          </li> -->
           <li><a href="#contact">Contact</a></li>
         </ul>
         <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
@@ -93,12 +121,12 @@ $rowprofile = mysqli_fetch_assoc($queryprofile);
     <!-- Hero Section -->
     <section id="hero" class="hero section dark-background">
 
-      <img src="assets/img/hero-img.jpg" alt="" data-aos="fade-in">
+      <img src="admin/assets/img/wfa-tool.jpg" alt="" data-aos="fade-in">
 
       <div class="container d-flex flex-column align-items-center justify-content-center text-center" data-aos="fade-up"
         data-aos-delay="100">
         <h2><?php echo isset($rowprofile['nm_profile']) ? $rowprofile['nm_profile'] : '' ?></h2>
-        <p><span class="typed" data-typed-items="Designer, Developer, Freelancer, Photographer"></span></p>
+        <p><span class="typed" data-typed-items="Developer, Freelancer, Traveller"></span></p>
       </div>
 
     </section><!-- /Hero Section -->
@@ -137,43 +165,44 @@ $rowprofile = mysqli_fetch_assoc($queryprofile);
               <h5>Skills</h5>
 
               <div class="progress">
-                <span class="skill"><span>HTML</span> <i class="val">100%</i></span>
+                <span class="skill"><span>HTML</span> <i class="val">50%</i></span>
                 <div class="progress-bar-wrap">
-                  <div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0"
+                  <div class="progress-bar" role="progressbar" aria-valuenow="50" aria-valuemin="0"
                     aria-valuemax="100"></div>
                 </div>
               </div><!-- End Skills Item -->
 
               <div class="progress">
-                <span class="skill"><span>CSS</span> <i class="val">90%</i></span>
+                <span class="skill"><span>CSS</span> <i class="val">40%</i></span>
                 <div class="progress-bar-wrap">
-                  <div class="progress-bar" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100">
+                  <div class="progress-bar" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100">
                   </div>
                 </div>
               </div><!-- End Skills Item -->
 
               <div class="progress">
-                <span class="skill"><span>JavaScript</span> <i class="val">75%</i></span>
+                <span class="skill"><span>JavaScript</span> <i class="val">30%</i></span>
                 <div class="progress-bar-wrap">
-                  <div class="progress-bar" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">
+                  <div class="progress-bar" role="progressbar" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100">
                   </div>
                 </div>
               </div><!-- End Skills Item -->
 
-              <div class="progress">
+              <!-- <div class="progress">
                 <span class="skill"><span>Photoshop</span> <i class="val">55%</i></span>
                 <div class="progress-bar-wrap">
                   <div class="progress-bar" role="progressbar" aria-valuenow="55" aria-valuemin="0" aria-valuemax="100">
                   </div>
                 </div>
-              </div><!-- End Skills Item -->
+              </div> -->
+              <!-- End Skills Item -->
 
             </div>
           </div>
 
           <div class="col-md-6">
             <div class="about-me">
-              <h4><?php echo $rowprofile['nm_profile'] ?? '' ?></h4>
+              <h4><?php echo $rowprofile['nm_profile'] ?></h4>
               <p>
                 <?php echo isset($rowprofile['description']) ? $rowprofile['description'] : '' ?>
                 <!-- Curabitur non nulla sit amet nisl tempus convallis quis ac lectus. Curabitur arcu erat, accumsan id
@@ -195,7 +224,7 @@ $rowprofile = mysqli_fetch_assoc($queryprofile);
       <!-- Section Title -->
       <div class="container section-title" data-aos="fade-up">
         <h2>Resume</h2>
-        <p>Necessitatibus eius consequatur ex aliquid fuga eum quidem sint consectetur velit</p>
+        <p>Ringkasan Singkat Pribadi Saya</p>
       </div><!-- End Section Title -->
 
       <div class="container">
@@ -203,58 +232,44 @@ $rowprofile = mysqli_fetch_assoc($queryprofile);
         <div class="row">
 
           <div class="col-lg-6" data-aos="fade-up" data-aos-delay="100">
-            <h3 class="resume-title">Sumary</h3>
+            <h3 class="resume-title">Summary</h3>
 
             <div class="resume-item pb-0">
-              <h4>Brandon Johnson</h4>
-              <p><em>Innovative and deadline-driven Graphic Designer with 3+ years of experience designing and
-                  developing user-centered digital/print marketing material from initial concept to final, polished
-                  deliverable.</em></p>
+              <h4><?php echo isset($rowsummary['name']) ? $rowsummary['name'] : '' ?></h4>
+              <p><em><?php echo isset($rowsummary['about']) ? $rowsummary['about'] : '' ?></em></p>
               <ul>
-                <li>Portland par 127,Orlando, FL</li>
-                <li>(123) 456-7891</li>
-                <li>alice.barkley@example.com</li>
+                <li><?php echo isset($rowsummary['address']) ? $rowsummary['address'] : '' ?></li>
+                <li><?php echo isset($rowsummary['phone']) ? $rowsummary['phone'] : '' ?></li>
+                <li><?php echo isset($rowsummary['email']) ? $rowsummary['email'] : '' ?></li>
               </ul>
             </div><!-- Edn Resume Item -->
 
             <h3 class="resume-title">Education</h3>
-            <div class="resume-item">
-              <h4>Master of Fine Arts &amp; Graphic Design</h4>
-              <h5>2015 - 2016</h5>
-              <p><em>Rochester Institute of Technology, Rochester, NY</em></p>
-              <p>Qui deserunt veniam. Et sed aliquam labore tempore sed quisquam iusto autem sit. Ea vero voluptatum qui
-                ut dignissimos deleniti nerada porti sand markend</p>
-            </div><!-- Edn Resume Item -->
-
-            <div class="resume-item">
-              <h4>Bachelor of Fine Arts &amp; Graphic Design</h4>
-              <h5>2010 - 2014</h5>
-              <p><em>Rochester Institute of Technology, Rochester, NY</em></p>
-              <p>Quia nobis sequi est occaecati aut. Repudiandae et iusto quae reiciendis et quis Eius vel ratione eius
-                unde vitae rerum voluptates asperiores voluptatem Earum molestiae consequatur neque etlon sader mart
-                dila</p>
-            </div><!-- Edn Resume Item -->
+            <?php foreach ($roweducation as $key => $education) { ?>
+              <div class="resume-item">
+                <h4><?php echo "{$education['degree_level']} - {$education['major']}" ?></h4>
+                <h5><?php echo "{$education['start_year']} - {$education['end_year']}" ?></h5>
+                <p><em><?php echo $education['school'] ?></em></p>
+                <p><?php echo $education['description'] ?></p>
+              </div><!-- Edn Resume Item -->
+            <?php } ?>
 
           </div>
 
           <div class="col-lg-6" data-aos="fade-up" data-aos-delay="200">
-            <h3 class="resume-title">Professional Experience</h3>
-            <div class="resume-item">
-              <h4>Senior graphic design specialist</h4>
-              <h5>2019 - Present</h5>
-              <p><em>Experion, New York, NY </em></p>
-              <ul>
-                <li>Lead in the design, development, and implementation of the graphic, layout, and production
-                  communication materials</li>
-                <li>Delegate tasks to the 7 members of the design team and provide counsel on all aspects of the
-                  project. </li>
-                <li>Supervise the assessment of all graphic materials in order to ensure quality and accuracy of the
-                  design</li>
-                <li>Oversee the efficient use of production project budgets ranging from $2,000 - $25,000</li>
-              </ul>
-            </div><!-- Edn Resume Item -->
+            <h3 class="resume-title">Experience</h3>
+            <?php foreach ($rowexperience as $key => $experience) { ?>
+              <div class="resume-item">
+                <h4><?php echo $experience['position'] ?></h4>
+                <h5><?php echo "{$experience['start_date']} - {$experience['end_date']}" ?></h5>
+                <p><em><?php echo $experience['location'] ?></em></p>
 
-            <div class="resume-item">
+                <p><?php echo $experience['description'] ?></p>
+
+              </div><!-- Edn Resume Item -->
+            <?php } ?>
+
+            <!-- <div class="resume-item">
               <h4>Graphic design specialist</h4>
               <h5>2017 - 2018</h5>
               <p><em>Stepping Stone Advertising, New York, NY</em></p>
@@ -265,7 +280,8 @@ $rowprofile = mysqli_fetch_assoc($queryprofile);
                 <li>Recommended and consulted with clients on the most appropriate graphic design</li>
                 <li>Created 4+ design presentations and proposals a month for clients and account managers</li>
               </ul>
-            </div><!-- Edn Resume Item -->
+            </div> -->
+            <!-- Edn Resume Item -->
 
           </div>
 
@@ -281,98 +297,29 @@ $rowprofile = mysqli_fetch_assoc($queryprofile);
       <!-- Section Title -->
       <div class="container section-title" data-aos="fade-up">
         <h2>Services</h2>
-        <p>Necessitatibus eius consequatur ex aliquid fuga eum quidem sint consectetur velit</p>
+        <p>Beberapa Layanan Jasa Yang Bisa Saya Lakukan Sebagai <strong><?php echo isset($rowprofile['profession']) ? $rowprofile['profession'] : '' ?></strong></p>
       </div><!-- End Section Title -->
 
       <div class="container">
 
         <div class="row gy-4">
 
-          <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
-            <div class="service-item  position-relative">
-              <div class="icon">
-                <i class="bi bi-activity"></i>
+          <?php foreach ($rowservice as $key => $data): ?>
+            <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="<?= 100 * ($key + 1) ?>">
+              <div class="service-item  position-relative">
+                <div class="icon">
+                  <i class="bi <?= $icons[$key % count($icons)] ?>"></i>
+                </div>
+                <a href="#" class="stretched-link">
+                  <h3><?= $data['nm_service'] ?></h3>
+                </a>
+                <p><?= $data['description'] ?></p>
               </div>
-              <a href="#" class="stretched-link">
-                <h3>Nesciunt Mete</h3>
-              </a>
-              <p>Provident nihil minus qui consequatur non omnis maiores. Eos accusantium minus dolores iure perferendis
-                tempore et consequatur.</p>
-            </div>
-          </div><!-- End Service Item -->
-
-          <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
-            <div class="service-item position-relative">
-              <div class="icon">
-                <i class="bi bi-broadcast"></i>
-              </div>
-              <a href="#" class="stretched-link">
-                <h3>Eosle Commodi</h3>
-              </a>
-              <p>Ut autem aut autem non a. Sint sint sit facilis nam iusto sint. Libero corrupti neque eum hic non ut
-                nesciunt dolorem.</p>
-            </div>
-          </div><!-- End Service Item -->
-
-          <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
-            <div class="service-item position-relative">
-              <div class="icon">
-                <i class="bi bi-easel"></i>
-              </div>
-              <a href="#" class="stretched-link">
-                <h3>Ledo Markt</h3>
-              </a>
-              <p>Ut excepturi voluptatem nisi sed. Quidem fuga consequatur. Minus ea aut. Vel qui id voluptas adipisci
-                eos earum corrupti.</p>
-            </div>
-          </div><!-- End Service Item -->
-
-          <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="400">
-            <div class="service-item position-relative">
-              <div class="icon">
-                <i class="bi bi-bounding-box-circles"></i>
-              </div>
-              <a href="#" class="stretched-link">
-                <h3>Asperiores Commodit</h3>
-              </a>
-              <p>Non et temporibus minus omnis sed dolor esse consequatur. Cupiditate sed error ea fuga sit provident
-                adipisci neque.</p>
-              <a href="#" class="stretched-link"></a>
-            </div>
-          </div><!-- End Service Item -->
-
-          <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="500">
-            <div class="service-item position-relative">
-              <div class="icon">
-                <i class="bi bi-calendar4-week"></i>
-              </div>
-              <a href="#" class="stretched-link">
-                <h3>Velit Doloremque</h3>
-              </a>
-              <p>Cumque et suscipit saepe. Est maiores autem enim facilis ut aut ipsam corporis aut. Sed animi at autem
-                alias eius labore.</p>
-              <a href="#" class="stretched-link"></a>
-            </div>
-          </div><!-- End Service Item -->
-
-          <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="600">
-            <div class="service-item position-relative">
-              <div class="icon">
-                <i class="bi bi-chat-square-text"></i>
-              </div>
-              <a href="#" class="stretched-link">
-                <h3>Dolori Architecto</h3>
-              </a>
-              <p>Hic molestias ea quibusdam eos. Fugiat enim doloremque aut neque non et debitis iure. Corrupti
-                recusandae ducimus enim.</p>
-              <a href="#" class="stretched-link"></a>
-            </div>
-          </div><!-- End Service Item -->
+            </div><!-- End Service Item -->
+          <?php endforeach ?>
 
         </div>
-
       </div>
-
     </section><!-- /Services Section -->
 
     <!-- Stats Section -->
@@ -423,15 +370,16 @@ $rowprofile = mysqli_fetch_assoc($queryprofile);
     </section><!-- /Stats Section -->
 
     <!-- Portfolio Section -->
-    <section id="portfolio" class="portfolio section">
+    <!-- <section id="portfolio" class="portfolio section"> -->
 
-      <!-- Section Title -->
-      <div class="container section-title" data-aos="fade-up">
+    <!-- Section Title -->
+    <!-- <div class="container section-title" data-aos="fade-up">
         <h2>Portfolio</h2>
         <p>Necessitatibus eius consequatur ex aliquid fuga eum quidem sint consectetur velit</p>
-      </div><!-- End Section Title -->
+      </div> -->
+    <!-- End Section Title -->
 
-      <div class="container">
+    <!-- <div class="container">
 
         <div class="isotope-layout" data-default-filter="*" data-layout="masonry" data-sort="original-order">
 
@@ -441,9 +389,10 @@ $rowprofile = mysqli_fetch_assoc($queryprofile);
             <li data-filter=".filter-product">Product</li>
             <li data-filter=".filter-branding">Branding</li>
             <li data-filter=".filter-books">Books</li>
-          </ul><!-- End Portfolio Filters -->
+          </ul> -->
+    <!-- End Portfolio Filters -->
 
-          <div class="row gy-4 isotope-container" data-aos="fade-up" data-aos-delay="200">
+    <!-- <div class="row gy-4 isotope-container" data-aos="fade-up" data-aos-delay="200">
 
             <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-app">
               <img src="assets/img/portfolio/app-1.jpg" class="img-fluid" alt="">
@@ -455,9 +404,10 @@ $rowprofile = mysqli_fetch_assoc($queryprofile);
                 <a href="portfolio-details.html" title="More Details" class="details-link"><i
                     class="bi bi-link-45deg"></i></a>
               </div>
-            </div><!-- End Portfolio Item -->
+            </div> -->
+    <!-- End Portfolio Item -->
 
-            <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-product">
+    <!-- <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-product">
               <img src="assets/img/portfolio/product-1.jpg" class="img-fluid" alt="">
               <div class="portfolio-info">
                 <h4>Product 1</h4>
@@ -467,9 +417,10 @@ $rowprofile = mysqli_fetch_assoc($queryprofile);
                 <a href="portfolio-details.html" title="More Details" class="details-link"><i
                     class="bi bi-link-45deg"></i></a>
               </div>
-            </div><!-- End Portfolio Item -->
+            </div> -->
+    <!-- End Portfolio Item -->
 
-            <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-branding">
+    <!-- <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-branding">
               <img src="assets/img/portfolio/branding-1.jpg" class="img-fluid" alt="">
               <div class="portfolio-info">
                 <h4>Branding 1</h4>
@@ -480,9 +431,10 @@ $rowprofile = mysqli_fetch_assoc($queryprofile);
                 <a href="portfolio-details.html" title="More Details" class="details-link"><i
                     class="bi bi-link-45deg"></i></a>
               </div>
-            </div><!-- End Portfolio Item -->
+            </div> -->
+    <!-- End Portfolio Item -->
 
-            <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-books">
+    <!-- <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-books">
               <img src="assets/img/portfolio/books-1.jpg" class="img-fluid" alt="">
               <div class="portfolio-info">
                 <h4>Books 1</h4>
@@ -492,9 +444,10 @@ $rowprofile = mysqli_fetch_assoc($queryprofile);
                 <a href="portfolio-details.html" title="More Details" class="details-link"><i
                     class="bi bi-link-45deg"></i></a>
               </div>
-            </div><!-- End Portfolio Item -->
+            </div> -->
+    <!-- End Portfolio Item -->
 
-            <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-app">
+    <!-- <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-app">
               <img src="assets/img/portfolio/app-2.jpg" class="img-fluid" alt="">
               <div class="portfolio-info">
                 <h4>App 2</h4>
@@ -504,9 +457,10 @@ $rowprofile = mysqli_fetch_assoc($queryprofile);
                 <a href="portfolio-details.html" title="More Details" class="details-link"><i
                     class="bi bi-link-45deg"></i></a>
               </div>
-            </div><!-- End Portfolio Item -->
+            </div> -->
+    <!-- End Portfolio Item -->
 
-            <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-product">
+    <!-- <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-product">
               <img src="assets/img/portfolio/product-2.jpg" class="img-fluid" alt="">
               <div class="portfolio-info">
                 <h4>Product 2</h4>
@@ -516,9 +470,10 @@ $rowprofile = mysqli_fetch_assoc($queryprofile);
                 <a href="portfolio-details.html" title="More Details" class="details-link"><i
                     class="bi bi-link-45deg"></i></a>
               </div>
-            </div><!-- End Portfolio Item -->
+            </div> -->
+    <!-- End Portfolio Item -->
 
-            <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-branding">
+    <!-- <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-branding">
               <img src="assets/img/portfolio/branding-2.jpg" class="img-fluid" alt="">
               <div class="portfolio-info">
                 <h4>Branding 2</h4>
@@ -529,9 +484,10 @@ $rowprofile = mysqli_fetch_assoc($queryprofile);
                 <a href="portfolio-details.html" title="More Details" class="details-link"><i
                     class="bi bi-link-45deg"></i></a>
               </div>
-            </div><!-- End Portfolio Item -->
+            </div> -->
+    <!-- End Portfolio Item -->
 
-            <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-books">
+    <!-- <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-books">
               <img src="assets/img/portfolio/books-2.jpg" class="img-fluid" alt="">
               <div class="portfolio-info">
                 <h4>Books 2</h4>
@@ -541,9 +497,10 @@ $rowprofile = mysqli_fetch_assoc($queryprofile);
                 <a href="portfolio-details.html" title="More Details" class="details-link"><i
                     class="bi bi-link-45deg"></i></a>
               </div>
-            </div><!-- End Portfolio Item -->
+            </div> -->
+    <!-- End Portfolio Item -->
 
-            <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-app">
+    <!-- <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-app">
               <img src="depan/assets/img/portfolio/app-3.jpg" class="img-fluid" alt="">
               <div class="portfolio-info">
                 <h4>App 3</h4>
@@ -553,9 +510,10 @@ $rowprofile = mysqli_fetch_assoc($queryprofile);
                 <a href="depan/portfolio-details.html" title="More Details" class="details-link"><i
                     class="bi bi-link-45deg"></i></a>
               </div>
-            </div><!-- End Portfolio Item -->
+            </div> -->
+    <!-- End Portfolio Item -->
 
-            <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-product">
+    <!-- <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-product">
               <img src="depan/assets/img/portfolio/product-3.jpg" class="img-fluid" alt="">
               <div class="portfolio-info">
                 <h4>Product 3</h4>
@@ -566,9 +524,10 @@ $rowprofile = mysqli_fetch_assoc($queryprofile);
                 <a href="depan/portfolio-details.html" title="More Details" class="details-link"><i
                     class="bi bi-link-45deg"></i></a>
               </div>
-            </div><!-- End Portfolio Item -->
+            </div> -->
+    <!-- End Portfolio Item -->
 
-            <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-branding">
+    <!-- <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-branding">
               <img src="depan/assets/img/portfolio/branding-3.jpg" class="img-fluid" alt="">
               <div class="portfolio-info">
                 <h4>Branding 3</h4>
@@ -579,9 +538,10 @@ $rowprofile = mysqli_fetch_assoc($queryprofile);
                 <a href="depan/portfolio-details.html" title="More Details" class="details-link"><i
                     class="bi bi-link-45deg"></i></a>
               </div>
-            </div><!-- End Portfolio Item -->
+            </div> -->
+    <!-- End Portfolio Item -->
 
-            <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-books">
+    <!-- <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-books">
               <img src="assets/img/portfolio/books-3.jpg" class="img-fluid" alt="">
               <div class="portfolio-info">
                 <h4>Books 3</h4>
@@ -591,26 +551,30 @@ $rowprofile = mysqli_fetch_assoc($queryprofile);
                 <a href="depan/portfolio-details.html" title="More Details" class="details-link"><i
                     class="bi bi-link-45deg"></i></a>
               </div>
-            </div><!-- End Portfolio Item -->
+            </div> -->
+    <!-- End Portfolio Item -->
+    <!-- 
+          </div> -->
+    <!-- End Portfolio Container -->
 
-          </div><!-- End Portfolio Container -->
-
-        </div>
+    <!-- </div>
 
       </div>
 
-    </section><!-- /Portfolio Section -->
+    </section> -->
+    <!-- /Portfolio Section -->
 
     <!-- Pricing Section -->
-    <section id="pricing" class="pricing section">
+    <!-- <section id="pricing" class="pricing section"> -->
 
-      <!-- Section Title -->
-      <div class="container section-title" data-aos="fade-up">
+    <!-- Section Title -->
+    <!-- <div class="container section-title" data-aos="fade-up">
         <h2>Pricing</h2>
         <p>Necessitatibus eius consequatur ex aliquid fuga eum quidem sint consectetur velit</p>
-      </div><!-- End Section Title -->
+      </div -->
+    <!-- End Section Title -->
 
-      <div class="container" data-aos="fade-up" data-aos-delay="100">
+    <!-- <div class="container" data-aos="fade-up" data-aos-delay="100">
 
         <div class="row gy-4 gx-lg-5">
 
@@ -619,51 +583,58 @@ $rowprofile = mysqli_fetch_assoc($queryprofile);
               <h3>Portrait Photography</h3>
               <h4>$160.00</h4>
             </div>
-          </div><!-- End Pricing Item -->
+          </div> -->
+    <!-- End Pricing Item -->
 
-          <div class="col-lg-6">
+    <!-- <div class="col-lg-6">
             <div class="pricing-item d-flex justify-content-between">
               <h3>Fashion Photography</h3>
               <h4>$300.00</h4>
             </div>
-          </div><!-- End Pricing Item -->
+          </div> -->
+    <!-- End Pricing Item -->
 
-          <div class="col-lg-6">
+    <!-- <div class="col-lg-6">
             <div class="pricing-item d-flex justify-content-between">
               <h3>Sports Photography</h3>
               <h4>$200.00</h4>
             </div>
-          </div><!-- End Pricing Item -->
+          </div> -->
+    <!-- End Pricing Item -->
 
-          <div class="col-lg-6">
+    <!-- <div class="col-lg-6">
             <div class="pricing-item d-flex justify-content-between">
               <h3>Still Life Photography</h3>
               <h4>$120.00</h4>
             </div>
-          </div><!-- End Pricing Item -->
+          </div> -->
+    <!-- End Pricing Item -->
 
-          <div class="col-lg-6">
+    <!-- <div class="col-lg-6">
             <div class="pricing-item d-flex justify-content-between">
               <h3>Wedding Photography</h3>
               <h4>$500.00</h4>
             </div>
-          </div><!-- End Pricing Item -->
+          </div> -->
+    <!-- End Pricing Item -->
 
-          <div class="col-lg-6">
+    <!-- <div class="col-lg-6">
             <div class="pricing-item d-flex justify-content-between">
               <h3>Photojournalism</h3>
               <h4>$200.00</h4>
             </div>
-          </div><!-- End Pricing Item -->
+          </div> -->
+    <!-- End Pricing Item -->
 
-        </div>
+    <!-- </div>
 
       </div>
 
-    </section><!-- /Pricing Section -->
+    </section> -->
+    <!-- /Pricing Section -->
 
     <!-- Faq Section -->
-    <section id="faq" class="faq section">
+    <!-- <section id="faq" class="faq section">
 
       <div class="container">
 
@@ -689,9 +660,10 @@ $rowprofile = mysqli_fetch_assoc($queryprofile);
                     gravida. Venenatis lectus magna fringilla urna porttitor rhoncus dolor purus non.</p>
                 </div>
                 <i class="faq-toggle bi bi-chevron-right"></i>
-              </div><!-- End Faq item-->
+              </div> -->
+    <!-- End Faq item-->
 
-              <div class="faq-item">
+    <!-- <div class="faq-item">
                 <h3><span class="num">2.</span> <span>Feugiat scelerisque varius morbi enim nunc faucibus a
                     pellentesque?</span></h3>
                 <div class="faq-content">
@@ -700,9 +672,10 @@ $rowprofile = mysqli_fetch_assoc($queryprofile);
                     elit ullamcorper dignissim. Mauris ultrices eros in cursus turpis massa tincidunt dui.</p>
                 </div>
                 <i class="faq-toggle bi bi-chevron-right"></i>
-              </div><!-- End Faq item-->
+              </div> -->
+    <!-- End Faq item-->
 
-              <div class="faq-item">
+    <!-- <div class="faq-item">
                 <h3><span class="num">3.</span> <span>Dolor sit amet consectetur adipiscing elit pellentesque?</span>
                 </h3>
                 <div class="faq-content">
@@ -712,9 +685,10 @@ $rowprofile = mysqli_fetch_assoc($queryprofile);
                     sed odio morbi quis</p>
                 </div>
                 <i class="faq-toggle bi bi-chevron-right"></i>
-              </div><!-- End Faq item-->
+              </div> -->
+    <!-- End Faq item-->
 
-              <div class="faq-item">
+    <!-- <div class="faq-item">
                 <h3><span class="num">4.</span> <span>Ac odio tempor orci dapibus. Aliquam eleifend mi in nulla?</span>
                 </h3>
                 <div class="faq-content">
@@ -723,9 +697,10 @@ $rowprofile = mysqli_fetch_assoc($queryprofile);
                     elit ullamcorper dignissim. Mauris ultrices eros in cursus turpis massa tincidunt dui.</p>
                 </div>
                 <i class="faq-toggle bi bi-chevron-right"></i>
-              </div><!-- End Faq item-->
+              </div> -->
+    <!-- End Faq item-->
 
-              <div class="faq-item">
+    <!-- <div class="faq-item">
                 <h3><span class="num">5.</span> <span>Tempus quam pellentesque nec nam aliquam sem et tortor
                     consequat?</span></h3>
                 <div class="faq-content">
@@ -734,19 +709,21 @@ $rowprofile = mysqli_fetch_assoc($queryprofile);
                     Purus gravida quis blandit turpis cursus in</p>
                 </div>
                 <i class="faq-toggle bi bi-chevron-right"></i>
-              </div><!-- End Faq item-->
+              </div> -->
+    <!-- End Faq item-->
 
-            </div>
+    <!-- </div>
 
           </div>
         </div>
 
       </div>
 
-    </section><!-- /Faq Section -->
+    </section> -->
+    <!-- /Faq Section -->
 
     <!-- Testimonials Section -->
-    <section id="testimonials" class="testimonials section accent-background">
+    <!-- <section id="testimonials" class="testimonials section accent-background">
 
       <img src="depan/assets/img/testimonials-bg.jpg" class="testimonials-bg" alt="">
 
@@ -786,9 +763,10 @@ $rowprofile = mysqli_fetch_assoc($queryprofile);
                   <i class="bi bi-quote quote-icon-right"></i>
                 </p>
               </div>
-            </div><!-- End testimonial item -->
+            </div> -->
+    <!-- End testimonial item -->
 
-            <div class="swiper-slide">
+    <!-- <div class="swiper-slide">
               <div class="testimonial-item">
                 <img src="assets/img/testimonials/testimonials-2.jpg" class="testimonial-img" alt="">
                 <h3>Sara Wilsson</h3>
@@ -804,9 +782,10 @@ $rowprofile = mysqli_fetch_assoc($queryprofile);
                   <i class="bi bi-quote quote-icon-right"></i>
                 </p>
               </div>
-            </div><!-- End testimonial item -->
+            </div> -->
+    <!-- End testimonial item -->
 
-            <div class="swiper-slide">
+    <!-- <div class="swiper-slide">
               <div class="testimonial-item">
                 <img src="assets/img/testimonials/testimonials-3.jpg" class="testimonial-img" alt="">
                 <h3>Jena Karlis</h3>
@@ -822,9 +801,10 @@ $rowprofile = mysqli_fetch_assoc($queryprofile);
                   <i class="bi bi-quote quote-icon-right"></i>
                 </p>
               </div>
-            </div><!-- End testimonial item -->
+            </div> -->
+    <!-- End testimonial item -->
 
-            <div class="swiper-slide">
+    <!-- <div class="swiper-slide">
               <div class="testimonial-item">
                 <img src="assets/img/testimonials/testimonials-4.jpg" class="testimonial-img" alt="">
                 <h3>Matt Brandon</h3>
@@ -841,9 +821,10 @@ $rowprofile = mysqli_fetch_assoc($queryprofile);
                   <i class="bi bi-quote quote-icon-right"></i>
                 </p>
               </div>
-            </div><!-- End testimonial item -->
+            </div> -->
+    <!-- End testimonial item -->
 
-            <div class="swiper-slide">
+    <!-- <div class="swiper-slide">
               <div class="testimonial-item">
                 <img src="assets/img/testimonials/testimonials-5.jpg" class="testimonial-img" alt="">
                 <h3>John Larson</h3>
@@ -860,15 +841,17 @@ $rowprofile = mysqli_fetch_assoc($queryprofile);
                   <i class="bi bi-quote quote-icon-right"></i>
                 </p>
               </div>
-            </div><!-- End testimonial item -->
-
+            </div> -->
+    <!-- End testimonial item -->
+    <!-- 
           </div>
           <div class="swiper-pagination"></div>
         </div>
 
       </div>
 
-    </section><!-- /Testimonials Section -->
+    </section> -->
+    <!-- /Testimonials Section -->
 
     <!-- Contact Section -->
     <section id="contact" class="contact section">
@@ -877,9 +860,10 @@ $rowprofile = mysqli_fetch_assoc($queryprofile);
       <div class="container section-title" data-aos="fade-up">
         <h2>Contact</h2>
         <p>Necessitatibus eius consequatur ex aliquid fuga eum quidem sint consectetur velit</p>
-      </div><!-- End Section Title -->
+      </div>
+      <!-- End Section Title -->
 
-      <div class="container" data-aos="fade-up" data-aos-delay="100">
+      <!-- <div class="container" data-aos="fade-up" data-aos-delay="100">
 
         <div class="info-wrap" data-aos="fade-up" data-aos-delay="200">
           <div class="row gy-5">
@@ -892,9 +876,10 @@ $rowprofile = mysqli_fetch_assoc($queryprofile);
                   <p>A108 Adam Street, New York, NY 535022</p>
                 </div>
               </div>
-            </div><!-- End Info Item -->
+            </div> -->
+      <!-- End Info Item -->
 
-            <div class="col-lg-4">
+      <!-- <div class="col-lg-4">
               <div class="info-item d-flex align-items-center">
                 <i class="bi bi-telephone flex-shrink-0"></i>
                 <div>
@@ -902,9 +887,10 @@ $rowprofile = mysqli_fetch_assoc($queryprofile);
                   <p>+1 5589 55488 55</p>
                 </div>
               </div>
-            </div><!-- End Info Item -->
+            </div> -->
+      <!-- End Info Item -->
 
-            <div class="col-lg-4">
+      <!-- <div class="col-lg-4">
               <div class="info-item d-flex align-items-center">
                 <i class="bi bi-envelope flex-shrink-0"></i>
                 <div>
@@ -912,54 +898,52 @@ $rowprofile = mysqli_fetch_assoc($queryprofile);
                   <p>info@example.com</p>
                 </div>
               </div>
-            </div><!-- End Info Item -->
-
+            </div> -->
+      <!-- End Info Item -->
+      <!-- 
           </div>
+        </div> -->
+
+      <?php
+      if (isset($_POST['sent'])) {
+        $name = $_POST['name'];
+        $email = $_POST['email'];
+        $subject = $_POST['subject'];
+        $message = $_POST['message'];
+
+        $query = mysqli_query($config, "INSERT INTO contacts (name, email, subject, message) VALUE ('$name', '$email', '$subject', '$message')");
+      }
+
+      ?>
+      <form action="" method="post" class="p-4" data-aos="fade-up" data-aos-delay="300">
+        <div class="row gy-4">
+
+          <div class="col-md-6">
+            <input type="text" name="name" class="form-control" placeholder="Your Name" required="">
+          </div>
+
+          <div class="col-md-6 ">
+            <input type="email" class="form-control" name="email" placeholder="Your Email" required="">
+          </div>
+
+          <div class="col-md-12">
+            <input type="text" class="form-control" name="subject" placeholder="Subject" required="">
+          </div>
+
+          <div class="col-md-12">
+            <textarea class="form-control" name="message" rows="6" placeholder="Message" required=""></textarea>
+          </div>
+
+          <div class="col-md-12 text-center">
+            <!-- <div class="loading">Loading</div>
+            <div class="error-message"></div>
+            <div class="sent-message">Your message has been sent. Thank you!</div> -->
+
+            <button class="btn btn-primary" type="submit" name="sent">Send Message</button>
+          </div>
+
         </div>
-
-        <?php
-        if (isset($_POST['sent'])) {
-          $name = $_POST['name'];
-          $email = $_POST['email'];
-          $subject = $_POST['subject'];
-          $message = $_POST['message'];
-
-          $query = mysqli_query($config, "INSERT INTO kontak (name, email, subject, message) VALUE ('$name', '$email', '$subject', '$message')");
-          // if ($query) {
-          //   header('location:?=index.php');
-          // }
-        }
-
-        ?>
-        <form action="" method="post" class="php-email-form" data-aos="fade-up" data-aos-delay="300">
-          <div class="row gy-4">
-
-            <div class="col-md-6">
-              <input type="text" name="name" class="form-control" placeholder="Your Name" required="">
-            </div>
-
-            <div class="col-md-6 ">
-              <input type="email" class="form-control" name="email" placeholder="Your Email" required="">
-            </div>
-
-            <div class="col-md-12">
-              <input type="text" class="form-control" name="subject" placeholder="Subject" required="">
-            </div>
-
-            <div class="col-md-12">
-              <textarea class="form-control" name="message" rows="6" placeholder="Message" required=""></textarea>
-            </div>
-
-            <div class="col-md-12 text-center">
-              <div class="loading">Loading</div>
-              <div class="error-message"></div>
-              <div class="sent-message">Your message has been sent. Thank you!</div>
-
-              <button type="submit" name="sent">Send Message</button>
-            </div>
-
-          </div>
-        </form><!-- End Contact Form -->
+      </form><!-- End Contact Form -->
 
       </div>
 
@@ -971,21 +955,21 @@ $rowprofile = mysqli_fetch_assoc($queryprofile);
 
     <div class="container">
       <div class="copyright text-center ">
-        <p>© <span>Copyright</span> <strong class="px-1 sitename">DevFolio</strong> <span>All Rights Reserved</span></p>
+        <p>2025 © <span>Copyright</span> <strong class="px-1 sitename">Salasbila Suci.G.</strong></p>
       </div>
       <div class="social-links d-flex justify-content-center">
-        <a href=""><i class="bi bi-twitter-x"></i></a>
-        <a href=""><i class="bi bi-facebook"></i></a>
-        <a href=""><i class="bi bi-instagram"></i></a>
-        <a href=""><i class="bi bi-linkedin"></i></a>
+        <!-- <a href=""><i class="bi bi-twitter-x"></i></a> -->
+        <!-- <a href=""><i class="bi bi-facebook"></i></a> -->
+        <a href="https://www.instagram.com/caymoeslem"><i class="bi bi-instagram"></i></a>
+        <a href="https://www.linkedin.com/in/salsabilasgw/"><i class="bi bi-linkedin"></i></a>
       </div>
-      <div class="credits">
-        <!-- All the links in the footer should remain intact. -->
-        <!-- You can delete the links only if you've purchased the pro version. -->
-        <!-- Licensing information: https://bootstrapmade.com/license/ -->
-        <!-- Purchase the pro version with working PHP/AJAX contact form: [buy-url] -->
-        Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
-      </div>
+      <!-- <div class="credits"> -->
+      <!-- All the links in the footer should remain intact. -->
+      <!-- You can delete the links only if you've purchased the pro version. -->
+      <!-- Licensing information: https://bootstrapmade.com/license/ -->
+      <!-- Purchase the pro version with working PHP/AJAX contact form: [buy-url] -->
+      <!-- Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a> -->
+      <!-- </div> -->
     </div>
 
   </footer>

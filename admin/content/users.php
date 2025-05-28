@@ -1,13 +1,21 @@
 <?php
-$query = mysqli_query($config, 'SELECT * FROM users ORDER BY id DESC');
+
+if ($_SESSION['LEVEL'] != 1) {
+  // echo "<h1>Only Admin Can Access This Page!</h1>";
+  // echo "<a href='dashboard.php' class='btn btn-warning>Go Back</a>";
+  // die;
+  header("location:dashboard.php?failed=access");
+}
+
+
+$query = mysqli_query($config, 'SELECT levels.nm_level, users.* FROM users LEFT JOIN levels ON levels.id = users.id_level ORDER BY users.id DESC');
 $row = mysqli_fetch_all($query, MYSQLI_ASSOC);
 
 //
 if (isset($_GET['delete'])) {
   $id = $_GET['delete'];
   $queryhapus = mysqli_query($config, "DELETE FROM users WHERE id='$id'");
-
-  header('?page=users&hapus=berhasil');
+  header('location:?page=users&hapus=berhasil');
 }
 ?>
 
@@ -20,6 +28,7 @@ if (isset($_GET['delete'])) {
       <thead>
         <tr>
           <th>No</th>
+          <th>Name of Level</th>
           <th>Name</th>
           <th>Email</th>
           <th>Status</th>
@@ -30,6 +39,7 @@ if (isset($_GET['delete'])) {
         <?php foreach ($row as $key => $data): ?>
           <tr>
             <td><?= $key + 1 ?></td>
+            <td><?= $data['nm_level'] ?></td>
             <td><?= $data['name'] ?></td>
             <td><?= $data['email'] ?></td>
             <td>

@@ -1,12 +1,12 @@
 <?php
-// session_start();
+session_start();
 ob_start();
 
-// $_name = isset($_SESSION['NAME']) ? $_SESSION['NAME'] : '';
+$_name = isset($_SESSION['NAME']) ? $_SESSION['NAME'] : '';
 
-// if (!$_name) {
-//   header('Location: index.php?access=failed');
-// }
+if (!$_name) {
+  header('Location: index.php?access=failed');
+}
 
 include 'config/koneksi.php';
 ?>

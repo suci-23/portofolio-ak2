@@ -7,7 +7,7 @@ if (isset($_GET['delete'])) {
   $id = $_GET['delete'];
   $queryhapus = mysqli_query($config, "DELETE FROM services WHERE id='$id'");
 
-  header('?page=services&hapus=berhasil');
+  header('location:?page=services&hapus=berhasil');
 }
 ?>
 

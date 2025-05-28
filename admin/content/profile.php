@@ -7,7 +7,7 @@ if (isset($_GET['delete'])) {
   $id = $_GET['delete'];
   $queryhapus = mysqli_query($config, "DELETE FROM profiles WHERE id='$id'");
 
-  header('?page=profiles&hapus=berhasil');
+  header('location:?page=profiles&hapus=berhasil');
 }
 ?>
 

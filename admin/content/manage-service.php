@@ -7,24 +7,24 @@ if (isset($_POST['simpan'])) {
   $nm_service = $_POST['nm_service'];
   $description = $_POST['description'];
 
-  $query = mysqli_query($config, "INSERT INTO services (nm_service, description, password) VALUES ('$nm_service', '$description', '$password')");
+  $query = mysqli_query($config, "INSERT INTO services (nm_service, description) VALUES ('$nm_service', '$description')");
   if ($query) {
     header('location:?page=services&tambah=berhasil');
   }
 }
 
 $header = isset($_GET['edit']) ? "Edit" : "Tambah";
-$id_user = isset($_GET['edit']) ? $_GET['edit'] : '';
-$queryedit = mysqli_query($config, "SELECT * FROM services WHERE id='$id_user'");
+$id = isset($_GET['edit']) ? $_GET['edit'] : '';
+$queryedit = mysqli_query($config, "SELECT * FROM services WHERE id='$id'");
 $rowedit = mysqli_fetch_assoc($queryedit);
 
 if (isset($_POST['edit'])) {
   $nm_service = $_POST['nm_service'];
   $description = $_POST['description'];
 
-  $queryUpdate = mysqli_query($config, "UPDATE services SET nm_service = '$nm_service', description = '$description', password = '$password' WHERE id='$id_user'");
+  $queryUpdate = mysqli_query($config, "UPDATE services SET nm_service = '$nm_service', description = '$description' WHERE id='$id'");
   if ($queryUpdate) {
-    header('location:?=services&edit=berhasil');
+    header('location:?page=services&edit=berhasil');
   }
 }
 
