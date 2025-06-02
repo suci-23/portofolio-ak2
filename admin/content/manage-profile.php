@@ -75,7 +75,7 @@ if (isset($_GET['del'])) {
     </div>
     <div class="col-sm-10">
       <input required type="text" name="nm_profile" class="form-control" placeholder="Your Name"
-        value="<?= isset($rowprofile['nm_profile']) ? $rowprofile['nm_profile'] : ''; ?>">
+        value="<?= isset($row['nm_profile']) ? $row['nm_profile'] : ''; ?>">
     </div>
   </div>
 
@@ -85,7 +85,7 @@ if (isset($_GET['del'])) {
     </div>
     <div class="col-sm-10">
       <input required type="profession" name="profession" class="form-control" placeholder="Your profession"
-        value="<?= isset($rowprofile['profession']) ? $rowprofile['profession'] : ''; ?>">
+        value="<?= isset($row['profession']) ? $row['profession'] : ''; ?>">
     </div>
   </div>
 
@@ -95,7 +95,7 @@ if (isset($_GET['del'])) {
     </div>
     <div class="col-sm-10">
       <input required type="email" name="email" class="form-control" placeholder="Your email"
-        value="<?= isset($rowprofile['email']) ? $rowprofile['email'] : ''; ?>">
+        value="<?= isset($row['email']) ? $row['email'] : ''; ?>">
     </div>
   </div>
 
@@ -105,7 +105,7 @@ if (isset($_GET['del'])) {
     </div>
     <div class="col-sm-10">
       <input required type="phone" name="phone" class="form-control" placeholder="Your phone"
-        value="<?= isset($rowprofile['phone']) ? $rowprofile['phone'] : ''; ?>">
+        value="<?= isset($row['phone']) ? $row['phone'] : ''; ?>">
     </div>
   </div>
 
@@ -124,8 +124,7 @@ if (isset($_GET['del'])) {
     </div>
     <div class="col-sm-10">
       <textarea id="summernote" type="description" name="description" class="form-control"
-        placeholder="Your description" cols="30" rows="5"
-        value="<?= isset($rowprofile['description']) ? $rowprofile['description'] : ''; ?>"></textarea>
+        placeholder="Your description" cols="30" rows="5"><?= isset($row['description']) ? $row['description'] : ''; ?></textarea>
     </div>
   </div>
 

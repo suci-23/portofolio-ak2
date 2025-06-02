@@ -16,7 +16,7 @@ if (isset($_GET['delete'])) {
     <div align="right" class="mb-3">
       <a href="?page=manage-experience" class="btn btn-primary">ADD</a>
     </div>
-    <table class="table table-bordered table-striped">
+    <table id="table" class="table table-bordered table-striped">
       <thead>
         <tr>
           <th>No</th>

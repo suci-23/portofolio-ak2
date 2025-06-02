@@ -91,8 +91,7 @@ if (isset($_POST['edit'])) {
     </div>
     <div class="col-sm-10">
       <textarea id="summernote" type="description" name="description" class="form-control"
-        placeholder="Your description" cols="30" rows="5"
-        value="<?= isset($rowedit['description']) ? $rowedit['description'] : ''; ?>"></textarea>
+        placeholder="Your description" cols="30" rows="5"><?= isset($rowedit['description']) ? $rowedit['description'] : ''; ?></textarea>
     </div>
   </div>
 
